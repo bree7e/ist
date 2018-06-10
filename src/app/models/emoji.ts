@@ -1,8 +1,9 @@
 import { ListType } from './list-type.enum';
 
 export class Emoji {
-    id?: number;
-    name: string;
-    url: string;
-    type: ListType;
+  constructor(
+    public name: string,
+    public url: string,
+    public type: ListType = ListType.All
+  ) {}
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 
 import { Emoji } from 'src/app/models/emoji';
 import { ListType } from '../models/list-type.enum';
@@ -12,7 +12,7 @@ import { ListType } from '../models/list-type.enum';
 })
 export class EmojiService {
   // TODO BehaviorSubject
-  public emojis = [];
+  public emojis: Emoji[] = [];
   readonly emojisUrl = 'https://api.github.com/emojis';
 
   constructor(private http: HttpClient) {
@@ -22,9 +22,12 @@ export class EmojiService {
 
   private getGithubEmojis(): Observable<Emoji[]> {
     return this.http
-      .get<Emoji[]>(this.emojisUrl)
-      .pipe(tap(emojis => console.log(`fetched ${emojis} emojis`)));
-    // TODO map на модель
+      .get(this.emojisUrl)
+      .pipe(
+        map(data =>
+          Object.keys(data).map(ghEmoji => new Emoji(ghEmoji, data[ghEmoji]))
+        )
+      );
   }
 
   getAll(): Observable<Emoji[]> {
@@ -41,10 +44,10 @@ export class EmojiService {
 
   getDeleted(): Observable<Emoji[]> {
     return of(
-        this.emojis.filter((emoji: Emoji) => {
-          return emoji.type === ListType.Deleted;
-        })
-      );
+      this.emojis.filter((emoji: Emoji) => {
+        return emoji.type === ListType.Deleted;
+      })
+    );
   }
 
   addToFavorites(emoji: Emoji): void {
@@ -87,6 +90,6 @@ export class EmojiService {
   }
 
   loadFromStorage() {
-    this.emojis = JSON.parse(localStorage.getItem('emojis') || '[]');
+    // this.emojis = JSON.parse(localStorage.getItem('emojis') || '[]');
   }
 }

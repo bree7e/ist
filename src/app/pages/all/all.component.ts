@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ListType } from 'src/app/models/list-type.enum';
 import { Emoji } from 'src/app/models/emoji';
 import { Observable } from 'rxjs';
-import { EmojiService } from '../../services/emoji.service';
+import { EmojiService } from 'src/app/services/emoji.service';
+
 
 @Component({
   selector: 'ist-all',
