@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+
 
 import { Observable } from 'rxjs';
 
@@ -8,17 +8,16 @@ import { EmojiService } from 'src/app/services/emoji.service';
 
 @Component({
   selector: 'ist-favorites',
-  templateUrl: './favorites.component.html',
-  styleUrls: ['./favorites.component.scss']
+  templateUrl: './favorites.component.html'
 })
 export class FavoritesComponent implements OnInit {
-    emojis$: Observable<Emoji[]>;
+  emojis$: Observable<Emoji[]>;
 
-    constructor(private emojiService: EmojiService, route: ActivatedRoute) {
-        console.log(route.snapshot.data.title);
-      }
+  constructor(private emojiService: EmojiService) {  }
 
-    ngOnInit() {
-      this.emojis$ = this.emojiService.getFavorites();
-    }
+  ngOnInit() {
+    this.emojis$ = this.emojiService.getFavorites();
+  }
+
+  onChangeTerm() {}
 }

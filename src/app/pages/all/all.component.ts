@@ -8,17 +8,19 @@ import { EmojiService } from 'src/app/services/emoji.service';
 
 @Component({
   selector: 'ist-all',
-  templateUrl: './all.component.html',
-  styleUrls: ['./all.component.scss']
+  templateUrl: './all.component.html'
 })
 export class AllComponent implements OnInit {
   emojis$: Observable<Emoji[]>;
+  title: '';
 
   constructor(private emojiService: EmojiService, route: ActivatedRoute) {
-    console.log(route.snapshot.data.title);
+    this.title = route.snapshot.data.title;
   }
 
   ngOnInit() {
     this.emojis$ = this.emojiService.getAll();
   }
+
+  onChangeTerm() {}
 }

@@ -21,7 +21,7 @@ export class EmojiService {
     return this.emojisSubject.asObservable();
   }
 
-  private loadGithubEmojis() {
+  private loadGithubEmojis(): void {
     this.http
       .get(this.emojisUrl)
       .pipe(
@@ -92,7 +92,22 @@ export class EmojiService {
     if (!term.trim()) {
       return of([]);
     }
-    return of(this.emojis);
+    let emojis$;
+    switch (context) {
+        case ListType.All:
+            emojis$ = this.getAll();
+            break;
+        case ListType.Favorite:
+            emojis$ = this.getFavorites();
+            break;
+        case ListType.Deleted:
+            emojis$ = this.getDeleted();
+            break;
+    }
+
+    return emojis$.pipe(
+      map( (emojis: Emoji[]) => emojis.filter(emoji => emoji.name.indexOf(term) > -1) )
+    );
   }
 
   saveToStorage() {

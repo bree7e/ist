@@ -7,8 +7,6 @@ import { EmojiService } from './services/emoji.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'ist';
-
   constructor(private emojiService: EmojiService) {
     emojiService.init();
   }

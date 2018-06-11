@@ -1,4 +1,5 @@
-<p>
-  favorites works!
-  <ist-emoji-list [emojis]="emojis$ | async"></ist-emoji-list>
-</p>
+<header class="ist__header">
+    <h1 class="ist__page-title">Избранные</h1>
+    <ist-emoji-search class="ist__search" (changeTerm)="onChangeTerm($event)"></ist-emoji-search>
+</header>
+<ist-emoji-list [emojis]="emojis$ | async"></ist-emoji-list>

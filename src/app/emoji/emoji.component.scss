@@ -4,10 +4,11 @@
     align-items: center;
     padding: 8px;
     &:hover {
-        background-color: lightgray;
+        background-color: rgba(211, 211, 211, 0.5);
     }
     &--favorite{
         background-color: #fafad2;
+        font-weight: 700;
     }
     a {
         color: inherit;

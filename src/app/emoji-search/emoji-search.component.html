@@ -1,1 +1,1 @@
-<input class="emoji-search" type="text" placeholder="Искать...">
+<input #searchBox class="emoji-search" type="text" placeholder="Искать..." (keyup)="search(searchBox.value)">

@@ -4,11 +4,6 @@
     padding: 32px;
     display: flex;
     flex-wrap: wrap;
-    &__header {
-        display: flex;
-        align-items: center;
-        // background-color: lightblue;
-    }
     &__sidebar {
         width: 20%;
         padding: 16px;
@@ -24,19 +19,8 @@
         box-sizing: border-box;
         // background-color: lightsalmon;
     }
-    &__page-title {
-        display: inline;
-        // background-color: lightcoral;
-    }
-    &__search {
-        width: 25%;
-        margin-left: auto;
-    }
     &__link--active {
         color: red;
         font-weight: 700;
-    }
-    * {
-        // border: 1px dotted gray;
     }
 }
