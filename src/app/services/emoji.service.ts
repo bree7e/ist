@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable, of, pipe } from 'rxjs';
-import { tap, map, take } from 'rxjs/operators';
+import { Observable, of, pipe, Subject, BehaviorSubject } from 'rxjs';
+import { tap, map, take, filter } from 'rxjs/operators';
 
 import { Emoji } from 'src/app/models/emoji';
 import { ListType } from '../models/list-type.enum';
@@ -11,74 +11,77 @@ import { ListType } from '../models/list-type.enum';
   providedIn: 'root'
 })
 export class EmojiService {
-  // TODO BehaviorSubject
-  public emojis: Emoji[] = [];
+  private emojis = [];
+  private emojisSubject = new BehaviorSubject<Emoji[]>([]);
   readonly emojisUrl = 'https://api.github.com/emojis';
 
   constructor(private http: HttpClient) {}
 
-  private getGithubEmojis(): Observable<Emoji[]> {
-    return this.http
+  private get emojis$(): Observable<Emoji[]> {
+    return this.emojisSubject.asObservable();
+  }
+
+  private loadGithubEmojis() {
+    this.http
       .get(this.emojisUrl)
       .pipe(
         map(data =>
           Object.keys(data).map(ghEmoji => new Emoji(ghEmoji, data[ghEmoji]))
         )
+      )
+      .subscribe(
+        emojis => {
+          this.emojis = emojis;
+          this.emojisSubject.next(emojis.slice());
+        },
+        error => console.log('Не удалось загрузить emojis')
       );
   }
 
   public init(): void {
-    this.getGithubEmojis().subscribe(emojis => (this.emojis = emojis));
+    this.loadGithubEmojis();
     // this.loadFromStorage();
   }
 
   getAll(): Observable<Emoji[]> {
-    return of(
-      this.emojis.filter((emoji: Emoji) => {
-        return (emoji.type !== ListType.Deleted);
-      })
+    return this.emojis$.pipe(
+        map( (emojis: Emoji[]) => emojis.filter(emoji => emoji.type !== ListType.Deleted) )
     );
   }
 
   getFavorites(): Observable<Emoji[]> {
-    return of(
-      this.emojis.filter((emoji: Emoji) => {
-        return emoji.type === ListType.Favorite;
-      })
+    return this.emojis$.pipe(
+        map( (emojis: Emoji[]) => emojis.filter(emoji => emoji.type === ListType.Favorite) )
     );
   }
 
   getDeleted(): Observable<Emoji[]> {
-    return of(
-      this.emojis.filter((emoji: Emoji) => {
-        return emoji.type === ListType.Deleted;
-      })
+    return this.emojis$.pipe(
+        map( (emojis: Emoji[]) => emojis.filter(emoji => emoji.type === ListType.Deleted) )
     );
   }
 
   toggleFavorites(emoji: Emoji): void {
+    let type;
     if (emoji.type === ListType.All) {
-      emoji.type = ListType.Favorite;
+      type = ListType.Favorite;
     } else {
-      emoji.type = ListType.All;
+      type = ListType.All;
     }
-    // this.emojis = [...this.emojis, emoji];
-    let findedEmoji = this.emojis.find(e => e.name === emoji.name);
-    findedEmoji = emoji;
-    // TODO next to Subject
+    this.emojis.find(e => e.name === emoji.name).type = type;
+    this.emojisSubject.next(this.emojis);
     this.saveToStorage();
   }
 
   deleteFromAll(emoji: Emoji): void {
-    // emoji.type = ListType.Deleted;
-    // this.emojis = [...this.emojis, emoji];
     this.emojis.find(e => e.name === emoji.name).type = ListType.Deleted;
+    this.emojisSubject.next(this.emojis);
     this.saveToStorage();
   }
 
   restoreToAll(emoji: Emoji): void {
-    // emoji.type = ListType.All;
     this.emojis.find(e => e.name === emoji.name).type = ListType.All;
+    this.emojisSubject.next(this.emojis);
     this.saveToStorage();
   }
 
