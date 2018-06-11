@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { Emoji } from 'src/app/models/emoji';
 import { EmojiService } from 'src/app/services/emoji.service';
+import { ListType } from '../../models/list-type.enum';
 
 @Component({
   selector: 'ist-deleted',
@@ -14,9 +15,12 @@ export class DeletedComponent implements OnInit {
 
   constructor(private emojiService: EmojiService) {  }
 
-  onChangeTerm() {  }
-
-  ngOnInit() {
+  ngOnInit(): void {
     this.emojis$ = this.emojiService.getDeleted();
   }
+
+  onChangeTerm(term: string): void {
+    this.emojis$ = this.emojiService.searchEmojis(term, ListType.Deleted);
+  }
+
 }

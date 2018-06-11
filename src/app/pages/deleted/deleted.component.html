@@ -1,5 +1,5 @@
 <header class="ist__header">
     <h1 class="ist__page-title">Удалённые</h1>
-    <ist-emoji-search class="ist__search"></ist-emoji-search>
+    <ist-emoji-search class="ist__search" (changeTerm)="onChangeTerm($event)"></ist-emoji-search>
 </header>
 <ist-emoji-list [emojis]="emojis$ | async"></ist-emoji-list>

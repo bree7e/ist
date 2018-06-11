@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 
 import { Emoji } from 'src/app/models/emoji';
 import { EmojiService } from 'src/app/services/emoji.service';
+import { ListType } from 'src/app/models/list-type.enum';
 
 @Component({
   selector: 'ist-favorites',
@@ -19,5 +20,7 @@ export class FavoritesComponent implements OnInit {
     this.emojis$ = this.emojiService.getFavorites();
   }
 
-  onChangeTerm() {}
+  onChangeTerm(term: string): void {
+    this.emojis$ = this.emojiService.searchEmojis(term, ListType.Favorite);
+  }
 }

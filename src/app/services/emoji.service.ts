@@ -45,19 +45,25 @@ export class EmojiService {
 
   getAll(): Observable<Emoji[]> {
     return this.emojis$.pipe(
-        map( (emojis: Emoji[]) => emojis.filter(emoji => emoji.type !== ListType.Deleted) )
+      map((emojis: Emoji[]) =>
+        emojis.filter(emoji => emoji.type !== ListType.Deleted)
+      )
     );
   }
 
   getFavorites(): Observable<Emoji[]> {
     return this.emojis$.pipe(
-        map( (emojis: Emoji[]) => emojis.filter(emoji => emoji.type === ListType.Favorite) )
+      map((emojis: Emoji[]) =>
+        emojis.filter(emoji => emoji.type === ListType.Favorite)
+      )
     );
   }
 
   getDeleted(): Observable<Emoji[]> {
     return this.emojis$.pipe(
-        map( (emojis: Emoji[]) => emojis.filter(emoji => emoji.type === ListType.Deleted) )
+      map((emojis: Emoji[]) =>
+        emojis.filter(emoji => emoji.type === ListType.Deleted)
+      )
     );
   }
 
@@ -89,24 +95,26 @@ export class EmojiService {
     term: string,
     context: ListType = ListType.All
   ): Observable<Emoji[]> {
-    if (!term.trim()) {
-      return of([]);
-    }
     let emojis$;
     switch (context) {
-        case ListType.All:
-            emojis$ = this.getAll();
-            break;
-        case ListType.Favorite:
-            emojis$ = this.getFavorites();
-            break;
-        case ListType.Deleted:
-            emojis$ = this.getDeleted();
-            break;
+      case ListType.All:
+        emojis$ = this.getAll();
+        break;
+      case ListType.Favorite:
+        emojis$ = this.getFavorites();
+        break;
+      case ListType.Deleted:
+        emojis$ = this.getDeleted();
+        break;
+    }
+    if (!term.trim()) {
+      return emojis$;
     }
 
     return emojis$.pipe(
-      map( (emojis: Emoji[]) => emojis.filter(emoji => emoji.name.indexOf(term) > -1) )
+      map((emojis: Emoji[]) =>
+        emojis.filter(emoji => emoji.name.indexOf(term) > -1)
+      )
     );
   }
 

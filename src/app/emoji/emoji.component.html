@@ -9,8 +9,8 @@
   </a>
   <img class="emoji__thumbnail" [src]="emoji.url" [alt]="emoji.name" width="25" height="25">
   <div class="emoji__actions">
-      <div class="emoji__action-button" (click)="addToFavorites()" *ngIf="!showDeleteButton()">[*]</div>
-      <div class="emoji__action-button" (click)="delete()" *ngIf="!showDeleteButton()">[X]</div>
-      <div class="emoji__action-button" (click)="restore()" *ngIf="showDeleteButton()">[|]</div>
+      <button class="emoji__action-button" (click)="addToFavorites()" *ngIf="!showDeleteButton()">*</button>
+      <button class="emoji__action-button" (click)="delete()" *ngIf="!showDeleteButton()">X</button>
+      <button class="emoji__action-button" (click)="restore()" *ngIf="showDeleteButton()">восстановить</button>
   </div>
 </div>

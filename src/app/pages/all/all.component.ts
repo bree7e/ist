@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 
 import { Emoji } from 'src/app/models/emoji';
 import { EmojiService } from 'src/app/services/emoji.service';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'ist-all',
@@ -18,9 +19,11 @@ export class AllComponent implements OnInit {
     this.title = route.snapshot.data.title;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.emojis$ = this.emojiService.getAll();
   }
 
-  onChangeTerm() {}
+  onChangeTerm(term: string): void {
+    this.emojis$ = this.emojiService.searchEmojis(term);
+  }
 }
