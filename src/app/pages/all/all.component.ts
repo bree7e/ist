@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
+import { Observable } from 'rxjs';
 
 import { Emoji } from 'src/app/models/emoji';
-import { Observable } from 'rxjs';
 import { EmojiService } from 'src/app/services/emoji.service';
-
 
 @Component({
   selector: 'ist-all',
@@ -13,7 +14,9 @@ import { EmojiService } from 'src/app/services/emoji.service';
 export class AllComponent implements OnInit {
   emojis$: Observable<Emoji[]>;
 
-  constructor(private emojiService: EmojiService) {}
+  constructor(private emojiService: EmojiService, route: ActivatedRoute) {
+    console.log(route.snapshot.data.title);
+  }
 
   ngOnInit() {
     this.emojis$ = this.emojiService.getAll();

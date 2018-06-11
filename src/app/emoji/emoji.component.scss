@@ -1,0 +1,32 @@
+
+.emoji {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    &:hover {
+        background-color: lightgray;
+    }
+    &--favorite{
+        background-color: #fafad2;
+    }
+    a {
+        color: inherit;
+    }
+    &__name {
+        width: 150px;
+        // text-align: right;
+    }
+    &__url {
+        width: 600px;
+        margin-left: 25px;
+    }
+    &__actions {
+        display: flex;
+        // width: 100px;
+    }
+    &__action-button {
+        padding: 4px;
+        cursor: pointer;
+        margin-left: 16px;
+    }
+}

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
+import { Observable, of, pipe } from 'rxjs';
+import { tap, map, take } from 'rxjs/operators';
 
 import { Emoji } from 'src/app/models/emoji';
 import { ListType } from '../models/list-type.enum';
@@ -15,10 +15,7 @@ export class EmojiService {
   public emojis: Emoji[] = [];
   readonly emojisUrl = 'https://api.github.com/emojis';
 
-  constructor(private http: HttpClient) {
-    this.getGithubEmojis().subscribe(emojis => (this.emojis = emojis));
-    this.loadFromStorage();
-  }
+  constructor(private http: HttpClient) {}
 
   private getGithubEmojis(): Observable<Emoji[]> {
     return this.http
@@ -30,8 +27,17 @@ export class EmojiService {
       );
   }
 
+  public init(): void {
+    this.getGithubEmojis().subscribe(emojis => (this.emojis = emojis));
+    // this.loadFromStorage();
+  }
+
   getAll(): Observable<Emoji[]> {
-    return of(this.emojis);
+    return of(
+      this.emojis.filter((emoji: Emoji) => {
+        return (emoji.type !== ListType.Deleted);
+      })
+    );
   }
 
   getFavorites(): Observable<Emoji[]> {
@@ -50,28 +56,29 @@ export class EmojiService {
     );
   }
 
-  addToFavorites(emoji: Emoji): void {
-    emoji.type = ListType.Favorite;
-    this.emojis = [...this.emojis, emoji];
+  toggleFavorites(emoji: Emoji): void {
+    if (emoji.type === ListType.All) {
+      emoji.type = ListType.Favorite;
+    } else {
+      emoji.type = ListType.All;
+    }
+    // this.emojis = [...this.emojis, emoji];
+    let findedEmoji = this.emojis.find(e => e.name === emoji.name);
+    findedEmoji = emoji;
     // TODO next to Subject
     this.saveToStorage();
   }
 
-  removeFromFavorites(emoji: Emoji): void {
-    emoji.type = ListType.All;
-    this.emojis = [...this.emojis, emoji];
-    this.saveToStorage();
-  }
-
   deleteFromAll(emoji: Emoji): void {
-    emoji.type = ListType.Deleted;
-    this.emojis = [...this.emojis, emoji];
+    // emoji.type = ListType.Deleted;
+    // this.emojis = [...this.emojis, emoji];
+    this.emojis.find(e => e.name === emoji.name).type = ListType.Deleted;
     this.saveToStorage();
   }
 
   restoreToAll(emoji: Emoji): void {
-    emoji.type = ListType.All;
-    this.emojis = [...this.emojis, emoji];
+    // emoji.type = ListType.All;
+    this.emojis.find(e => e.name === emoji.name).type = ListType.All;
     this.saveToStorage();
   }
 

@@ -32,6 +32,10 @@
         width: 25%;
         margin-left: auto;
     }
+    &__link--active {
+        color: red;
+        font-weight: 700;
+    }
     * {
         // border: 1px dotted gray;
     }

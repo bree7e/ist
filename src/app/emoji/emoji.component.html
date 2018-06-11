@@ -1,11 +1,16 @@
-<p>
-  <span>
+<div class="emoji"
+  [class.emoji--favorite]="isFavorite()"   
+  >
+  <div class="emoji__name">
       {{ emoji.name }}
-  </span>
-  <a [href]="emoji.url">
+  </div>
+  <a class="emoji__url" [href]="emoji.url">
      {{ emoji. url}} 
   </a>
-  <img [src]="emoji.url" [alt]="emoji.name" width="25" height="25">
-  <span>[*]</span>
-  <span>[X]</span>
-</p>
+  <img class="emoji__thumbnail" [src]="emoji.url" [alt]="emoji.name" width="25" height="25">
+  <div class="emoji__actions">
+      <div class="emoji__action-button" (click)="addToFavorites()" *ngIf="!showDeleteButton()">[*]</div>
+      <div class="emoji__action-button" (click)="delete()" *ngIf="!showDeleteButton()">[X]</div>
+      <div class="emoji__action-button" (click)="restore()" *ngIf="showDeleteButton()">[|]</div>
+  </div>
+</div>

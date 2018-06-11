@@ -7,9 +7,9 @@ import { DeletedComponent } from './pages/deleted/deleted.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/all', pathMatch: 'full' },
-  { path: 'all', component: AllComponent },
-  { path: 'favorites', component: FavoritesComponent },
-  { path: 'deleted', component: DeletedComponent }
+  { path: 'all', component: AllComponent, data: { title: 'Все' }  },
+  { path: 'favorites', component: FavoritesComponent, data: { title: 'Избранные' }  },
+  { path: 'deleted', component: DeletedComponent, data: { title: 'Удалённые' }  }
 ];
 
 @NgModule({

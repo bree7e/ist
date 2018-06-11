@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { EmojiService } from './services/emoji.service';
 
 @Component({
   selector: 'ist-root',
@@ -7,4 +8,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ist';
+
+  constructor(private emojiService: EmojiService) {
+    emojiService.init();
+  }
 }

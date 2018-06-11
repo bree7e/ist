@@ -1,1 +1,2 @@
-<ist-emoji *ngFor="let emoji of emojis" [emoji]="emoji"></ist-emoji>
+<ist-emoji *ngFor="let emoji of emojis" [emoji]="emoji" (changeList)="onEmojiChangeList(emoji, $event)"></ist-emoji>
+

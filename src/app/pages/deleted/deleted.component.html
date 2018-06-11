@@ -1,4 +1,5 @@
-<p>
-  deleted works!
-  <ist-emoji-list [emojis]="emojis$ | async"></ist-emoji-list>
-</p>
+<ist-emoji-list [emojis]="emojis$ | async" *ngIf="emojis$ | async; else loading"></ist-emoji-list>
+
+<ng-template #loading>
+  Loading stuff...
+</ng-template>
