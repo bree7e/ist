@@ -46,6 +46,10 @@ export class EmojiComponent implements OnInit {
     this.changeList.emit(ListType.All);
   }
 
+  isHighlighted(): boolean {
+    return this.context === ListType.All && this.emoji.type === ListType.Favorite;
+  }
+
   showFavoriteButton(): boolean {
     return this.context === ListType.All;
   }
