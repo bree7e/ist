@@ -1,11 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Emoji } from 'src/app/models/emoji';
 import { ListType } from '../models/list-type.enum';
 
 @Component({
   selector: 'ist-emoji',
   templateUrl: './emoji.component.html',
-  styleUrls: ['./emoji.component.scss']
+  styleUrls: ['./emoji.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EmojiComponent implements OnInit {
   @Input() emoji: Emoji = null;

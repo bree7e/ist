@@ -1,0 +1,18 @@
+.navigation {
+    &__list {
+        list-style-type: none;
+    }
+    &__item {
+        margin-bottom: 8px;
+    }
+    &__link {
+        display: block;
+        color: inherit;
+        padding: 8px;
+        text-decoration: none;
+        &--active {
+            font-weight: 700;
+            border-left: 4px solid #34d058;
+        }
+    }
+}

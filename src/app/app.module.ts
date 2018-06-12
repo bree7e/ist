@@ -10,6 +10,7 @@ import { EmojiComponent } from './emoji/emoji.component';
 import { EmojiListComponent } from './emoji-list/emoji-list.component';
 import { EmojiSearchComponent } from './emoji-search/emoji-search.component';
 import { HttpClientModule } from '@angular/common/http';
+import { NavigationComponent } from './navigation/navigation.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { HttpClientModule } from '@angular/common/http';
     DeletedComponent,
     EmojiComponent,
     EmojiListComponent,
-    EmojiSearchComponent
+    EmojiSearchComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,

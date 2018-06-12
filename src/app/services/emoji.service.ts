@@ -21,26 +21,43 @@ export class EmojiService {
     return this.emojisSubject.asObservable();
   }
 
-  private loadGithubEmojis(): void {
-    this.http
+  saveToStorage() {
+    localStorage.setItem('emojis', JSON.stringify(this.emojis));
+  }
+
+  /**
+   * Объеденить значения из local storage с новыми url картинок от github
+   */
+  loadFromStorage() {
+    const localEmojis = JSON.parse(localStorage.getItem('emojis') || '[]');
+    // debugger;
+    if (localEmojis.length > 0) {
+      this.emojis = localEmojis.map(emoji =>
+        Object.assign(emoji, { url: this.emojis.find(e => e.name === emoji.name).url })
+      );
+    }
+    // this.emojisSubject.next(this.emojis);
+    this.emojisSubject.next(this.emojis);
+  }
+
+  private getGithubEmojis(): Observable<Emoji[]> {
+    return this.http
       .get(this.emojisUrl)
       .pipe(
         map(data =>
           Object.keys(data).map(ghEmoji => new Emoji(ghEmoji, data[ghEmoji]))
         )
-      )
-      .subscribe(
-        emojis => {
-          this.emojis = emojis;
-          this.emojisSubject.next(emojis.slice());
-        },
-        error => console.log('Не удалось загрузить emojis')
       );
   }
 
   public init(): void {
-    this.loadGithubEmojis();
-    // this.loadFromStorage();
+    this.getGithubEmojis().subscribe(
+      emojis => {
+        this.emojis = emojis;
+        this.loadFromStorage();
+      },
+      () => console.error('Не удалось загрузить emojis')
+    );
   }
 
   getAll(): Observable<Emoji[]> {
@@ -116,13 +133,5 @@ export class EmojiService {
         emojis.filter(emoji => emoji.name.indexOf(term) > -1)
       )
     );
-  }
-
-  saveToStorage() {
-    localStorage.setItem('emojis', JSON.stringify(this.emojis));
-  }
-
-  loadFromStorage() {
-    // this.emojis = JSON.parse(localStorage.getItem('emojis') || '[]');
   }
 }

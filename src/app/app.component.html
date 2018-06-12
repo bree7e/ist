@@ -1,12 +1,6 @@
 <div class="ist">
     <aside class="ist__sidebar">
-        <nav class="ist__navigation">
-            <ul>
-                <li><a routerLink="/all" routerLinkActive="ist__link--active">Все</a></li>
-                <li><a routerLink="/favorites" routerLinkActive="ist__link--active">Избранные</a></li>
-                <li><a routerLink="/deleted" routerLinkActive="ist__link--active">Удалённые</a></li>
-            </ul>
-        </nav>
+        <ist-navigation></ist-navigation>
     </aside>
     <main class="ist__page">
         <router-outlet></router-outlet>

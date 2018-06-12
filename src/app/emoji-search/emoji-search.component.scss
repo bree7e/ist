@@ -4,4 +4,8 @@
     border: 0;
     border-bottom: 2px solid;
     box-sizing: border-box;
+    &:focus {
+        outline: none;
+        border-bottom-color: #34d058;
+    }
 }
