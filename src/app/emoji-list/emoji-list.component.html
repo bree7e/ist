@@ -1,11 +1,9 @@
-<div class="emoji-list" *ngIf="emojis.length; else emptyList">
+<div class="emoji-list" *ngIf="emojis == null">Загрузка</div>
+<div class="emoji-list emoji-list--empty" *ngIf="emojis?.length === 0">Список пуст</div>
+<div class="emoji-list" *ngIf="emojis?.length">
     <ist-emoji *ngFor="let emoji of emojis" 
         [emoji]="emoji" 
         (changeList)="onEmojiChangeList(emoji, $event)"
         [context]="context"
     ></ist-emoji>
 </div>
- 
-<ng-template #emptyList>
-    <div class="emoji-list emoji-list--empty">Список пуст</div>
-</ng-template>

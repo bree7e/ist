@@ -12,7 +12,7 @@ import { ListType } from '../models/list-type.enum';
 })
 export class EmojiService {
   private emojis = [];
-  private emojisSubject = new BehaviorSubject<Emoji[]>([]);
+  private emojisSubject = new BehaviorSubject<Emoji[]>(null);
   readonly emojisUrl = 'https://api.github.com/emojis';
 
   constructor(private http: HttpClient) {}
@@ -33,7 +33,9 @@ export class EmojiService {
     // debugger;
     if (localEmojis.length > 0) {
       this.emojis = localEmojis.map(emoji =>
-        Object.assign(emoji, { url: this.emojis.find(e => e.name === emoji.name).url })
+        Object.assign(emoji, {
+          url: this.emojis.find(e => e.name === emoji.name).url
+        })
       );
     }
     // this.emojisSubject.next(this.emojis);
@@ -62,25 +64,31 @@ export class EmojiService {
 
   getAll(): Observable<Emoji[]> {
     return this.emojis$.pipe(
-      map((emojis: Emoji[]) =>
-        emojis.filter(emoji => emoji.type !== ListType.Deleted)
-      )
+      map((emojis: Emoji[]) => {
+        if (emojis !== null) {
+          return emojis.filter(emoji => emoji.type !== ListType.Deleted);
+        }
+      })
     );
   }
 
   getFavorites(): Observable<Emoji[]> {
     return this.emojis$.pipe(
-      map((emojis: Emoji[]) =>
-        emojis.filter(emoji => emoji.type === ListType.Favorite)
-      )
+      map((emojis: Emoji[]) => {
+        if (emojis !== null) {
+          return emojis.filter(emoji => emoji.type === ListType.Favorite);
+        }
+      })
     );
   }
 
   getDeleted(): Observable<Emoji[]> {
     return this.emojis$.pipe(
-      map((emojis: Emoji[]) =>
-        emojis.filter(emoji => emoji.type === ListType.Deleted)
-      )
+      map((emojis: Emoji[]) => {
+        if (emojis !== null) {
+          return emojis.filter(emoji => emoji.type === ListType.Deleted);
+        }
+      })
     );
   }
 
