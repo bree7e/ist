@@ -1,16 +1,17 @@
-<div class="emoji"
-  [class.emoji--favorite]="isFavorite()"   
-  >
-  <div class="emoji__name">
-      {{ emoji.name }}
-  </div>
-  <a class="emoji__url" [href]="emoji.url">
-     {{ emoji. url}} 
-  </a>
-  <img class="emoji__thumbnail" [src]="emoji.url" [alt]="emoji.name" width="25" height="25">
-  <div class="emoji__actions">
-      <button class="emoji__action-button" (click)="addToFavorites()" *ngIf="!showDeleteButton()">*</button>
-      <button class="emoji__action-button" (click)="delete()" *ngIf="!showDeleteButton()">X</button>
-      <button class="emoji__action-button" (click)="restore()" *ngIf="showDeleteButton()">восстановить</button>
-  </div>
+<div class="emoji" [class.emoji--favorite]="isFavorite()">
+    <div class="emoji__name">
+        {{ emoji.name }}
+    </div>
+    <a class="emoji__url" [href]="emoji.url">
+        {{ emoji. url}}
+    </a>
+    <div class="emoji__image">
+        <img class="emoji__thumbnail" [src]="emoji.url" [alt]="emoji.name" width="25" height="25">
+        <img class="emoji__full-image" [src]="emoji.url" [alt]="emoji.name">
+    </div>
+    <div class="emoji__actions">
+        <button class="emoji__action-button" (click)="addToFavorites()" *ngIf="!showDeleteButton()">*</button>
+        <button class="emoji__action-button" (click)="delete()" *ngIf="!showDeleteButton()">X</button>
+        <button class="emoji__action-button" (click)="restore()" *ngIf="showDeleteButton()">восстановить</button>
+    </div>
 </div>
