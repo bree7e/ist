@@ -10,13 +10,15 @@ import { EmojiService } from 'src/app/services/emoji.service';
   styleUrls: ['./emoji-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EmojiListComponent implements OnInit {
+export class EmojiListComponent {
   @Input() emojis: Emoji[] = [];
+  @Input() showHighlighted = false;
+  @Input() context: ListType;
 
   constructor(private emojiService: EmojiService) {}
 
-  ngOnInit() {
-
+  isEmojiHighlighted (emoji: Emoji): boolean {
+      return this.showHighlighted && emoji.type === ListType.Favorite;
   }
 
   onEmojiChangeList(emoji: Emoji, newListType: ListType) {

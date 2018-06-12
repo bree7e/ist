@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-
 import { Observable } from 'rxjs';
 
 import { Emoji } from 'src/app/models/emoji';
@@ -12,9 +11,10 @@ import { ListType } from 'src/app/models/list-type.enum';
   templateUrl: './favorites.component.html'
 })
 export class FavoritesComponent implements OnInit {
+  listType = ListType;
   emojis$: Observable<Emoji[]>;
 
-  constructor(private emojiService: EmojiService) {  }
+  constructor(private emojiService: EmojiService) {}
 
   ngOnInit() {
     this.emojis$ = this.emojiService.getFavorites();

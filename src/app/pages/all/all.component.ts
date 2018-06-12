@@ -6,12 +6,14 @@ import { Observable } from 'rxjs';
 import { Emoji } from 'src/app/models/emoji';
 import { EmojiService } from 'src/app/services/emoji.service';
 import { switchMap } from 'rxjs/operators';
+import { ListType } from '../../models/list-type.enum';
 
 @Component({
   selector: 'ist-all',
   templateUrl: './all.component.html'
 })
 export class AllComponent implements OnInit {
+  listType = ListType;
   emojis$: Observable<Emoji[]>;
   title: '';
 

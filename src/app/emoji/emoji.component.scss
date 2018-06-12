@@ -5,7 +5,7 @@
     &:hover {
         background-color: rgba(211, 211, 211, 0.5);
     }
-    &--favorite {
+    &--highlighted {
         background-color: #fafad2;
         font-weight: 700;
     }
@@ -17,14 +17,12 @@
     }
     &__url {
         width: 600px;
-        margin-left: 25px;
+        margin-left: 16px;
     }
     &__image {
         position: relative;
-        &:hover {
-            .emoji__full-image { 
-                display: block;
-            }        
+        &:hover .emoji__full-image {
+            display: block;
         }
     }
     &__full-image {
@@ -38,14 +36,8 @@
         border-radius: 8px;
         z-index: 10;
     }
-    li img {
-        display: none;
-    }
-    li a:hover+img {
-        display: block;
-    }
     &__actions {
-        display: flex; // width: 100px;
+        display: flex;
     }
     &__action-button {
         padding: 4px;

@@ -2,4 +2,4 @@
     <h1 class="ist__page-title">Все emojis</h1>
     <ist-emoji-search class="ist__search" (changeTerm)="onChangeTerm($event)"></ist-emoji-search>
 </header>
-<ist-emoji-list [emojis]="emojis$ | async"></ist-emoji-list>
+<ist-emoji-list [emojis]="emojis$ | async" [showHighlighted]="true" [context]="listType.All"></ist-emoji-list>
