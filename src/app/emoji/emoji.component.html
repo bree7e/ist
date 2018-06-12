@@ -10,8 +10,8 @@
         <img class="emoji__full-image" [src]="emoji.url" [alt]="emoji.name">
     </div>
     <div class="emoji__actions">
-        <button class="emoji__action-button" (click)="onFavoriteClick()" *ngIf="showFavoriteButton()">*</button>
-        <button class="emoji__action-button" (click)="onDeleteClick()" *ngIf="showDeleteButton()">X</button>
-        <button class="emoji__action-button" (click)="onRestoreClick()" *ngIf="showRestoreButton()">восстановить</button>
+        <button class="emoji__action-button" (click)="onFavoriteClick()" *ngIf="showFavoriteButton()">★</button>
+        <button class="emoji__action-button" (click)="onDeleteClick()" *ngIf="showDeleteButton()">☓</button>
+        <button class="emoji__action-button" (click)="onRestoreClick()" *ngIf="showRestoreButton()">⤴</button>
     </div>
 </div>
